@@ -119,18 +119,3 @@ function sumLengths(lengths:number[]):number {
 });
 return total;
 }
-
-setInterval(() => {
-    for (var i = 0; i < 50; i++) {
-    var stamp = new Date().getTime();
-    var wid = NewWID(i);
-    if (wid.length !== i) {
-        throw {
-            wid: wid,
-            requestedLength: i,
-            actualLength: wid.length
-        };
-    }
-    console.log("WID: " + wid + " (" + (new Date().getTime() - stamp) + ")");
-}
-}, 100);

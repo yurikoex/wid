@@ -114,19 +114,4 @@ function sumLengths(lengths) {
     return total;
 }
 
-setInterval(function () {
-    for (var i = 0; i < 50; i++) {
-        var stamp = new Date().getTime();
-        var wid = exports.NewWID(i);
-        if (wid.length !== i) {
-            throw {
-                wid: wid,
-                requestedLength: i,
-                actualLength: wid.length
-            };
-        }
-        console.log("WID: " + wid + " (" + (new Date().getTime() - stamp) + ")");
-    }
-}, 100);
-
 //@ sourceMappingURL=wid.js.map
