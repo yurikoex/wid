@@ -1,6 +1,6 @@
 {
   "name": "wid",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Generate random word concatenations to match a specific length. Sub <1ms creation time.",
   "main": "wid.js",
   "scripts": {
