@@ -4,6 +4,7 @@ A word id(wid) is a randomly generated concatenation of words from a dictionary 
 
 To use wid, var wid = require('wid');, and call wid.NewWID(someLength) to generate a wid!
 Some use cases:
+
 1. **Replace a GUID
 2. **Replace a key name in redis
 3. **Great for any id property in an object
