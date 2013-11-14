@@ -1,10 +1,10 @@
 {
   "name": "wid",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Generate random word concatenations to match a specific length. Sub <1ms creation time.",
   "main": "wid.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodeunit wid_tests.js"
   },
   "repository": {
     "type": "git",
