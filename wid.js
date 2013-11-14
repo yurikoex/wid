@@ -29,30 +29,56 @@ var zWords = require("./Words/ZWords.json");
 
 var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
-var allWords = aWords.concat(bWords).concat(cWords).concat(dWords).concat(eWords).concat(fWords).concat(gWords).concat(hWords).concat(iWords).concat(jWords).concat(kWords).concat(lWords).concat(mWords).concat(nWords).concat(oWords).concat(pWords).concat(qWords).concat(rWords).concat(sWords).concat(tWords).concat(uWords).concat(vWords).concat(wWords).concat(xWords).concat(yWords).concat(zWords);
-var allWordsWithLength = [];
-_.each(allWords, function (word) {
-    allWordsWithLength.push({
+var allWordsWithLength = _.map(_.flatten([
+    aWords,
+    bWords,
+    cWords,
+    dWords,
+    eWords,
+    fWords,
+    gWords,
+    hWords,
+    iWords,
+    jWords,
+    kWords,
+    lWords,
+    mWords,
+    nWords,
+    oWords,
+    pWords,
+    qWords,
+    rWords,
+    sWords,
+    tWords,
+    uWords,
+    vWords,
+    wWords,
+    xWords,
+    yWords,
+    zWords
+]), function (word) {
+    return {
         word: word,
         len: word.length
-    });
+    };
 });
+
 var longestWordWithLength = _.max(allWordsWithLength, function (wordWithLength) {
     return wordWithLength.len;
 });
+
 var shortestWordWithLength = _.min(allWordsWithLength, function (wordWithLength) {
     return wordWithLength.len;
 });
-var lengthRange = _.range(shortestWordWithLength.len, longestWordWithLength.len + 1);
-var letterLengthList = [];
-_.each(lengthRange, function (wordLength) {
+
+var letterLengthList = _.map(_.range(shortestWordWithLength.len, longestWordWithLength.len + 1), function (wordLength) {
     var list = _.filter(allWordsWithLength, function (wordWithLength) {
         return wordWithLength.len === wordLength;
     });
-    letterLengthList.push({
+    return {
         words: _.pluck(list, 'word'),
         numberOfLetters: wordLength
-    });
+    };
 });
 
 function NewWID(widLength) {
@@ -98,6 +124,7 @@ function getRandomLengthRange(length) {
     }
     return lengths;
 }
+
 function getRandomLength(length) {
     var rnd = shortestWordWithLength.len + Math.floor(Math.random() * (longestWordWithLength.len - shortestWordWithLength.len));
     if (rnd > length) {
@@ -107,11 +134,9 @@ function getRandomLength(length) {
 }
 
 function sumLengths(lengths) {
-    var total = 0;
-    _.each(lengths, function (len) {
-        total += len;
-    });
-    return total;
+    return _.reduce(lengths, function (memo, num) {
+        return memo + num;
+    }, 0);
 }
 
 //@ sourceMappingURL=wid.js.map

@@ -27,36 +27,42 @@ var xWords = require("./Words/XWords.json");
 var yWords = require("./Words/YWords.json");
 var zWords = require("./Words/ZWords.json");
 
-
+//Used for randomness later
 var letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
-var allWords = aWords.concat(bWords).concat(cWords).concat(dWords).concat(eWords).concat(fWords)
-    .concat(gWords).concat(hWords).concat(iWords).concat(jWords).concat(kWords).concat(lWords).concat(mWords)
-    .concat(nWords).concat(oWords).concat(pWords).concat(qWords).concat(rWords).concat(sWords).concat(tWords)
-    .concat(uWords).concat(vWords).concat(wWords).concat(xWords).concat(yWords).concat(zWords);
-var allWordsWithLength = [];
-_.each(allWords, (word) => {
-    allWordsWithLength.push({
-        word: word,
-        len: word.length
-    })
-});
+//create list of words, add in the length
+var allWordsWithLength = _.map(_.flatten([
+        aWords,bWords,cWords,dWords,
+        eWords,fWords,gWords,hWords,
+        iWords,jWords,kWords,lWords,
+        mWords,nWords,oWords,pWords,
+        qWords,rWords,sWords,tWords,
+        uWords,vWords,wWords,xWords,
+        yWords,zWords
+    ]),
+    (word)=> {
+        return {
+            word: word,
+            len: word.length
+        };
+    });
+
 var longestWordWithLength = _.max(allWordsWithLength, (wordWithLength) => {
     return wordWithLength.len;
 });
+
 var shortestWordWithLength = _.min(allWordsWithLength, (wordWithLength) => {
     return wordWithLength.len;
 });
-var lengthRange = _.range(shortestWordWithLength.len, longestWordWithLength.len + 1);
-var letterLengthList = [];
-_.each(lengthRange, (wordLength) => {
+
+var letterLengthList = _.map(_.range(shortestWordWithLength.len, longestWordWithLength.len + 1), (wordLength) => {
     var list = _.filter(allWordsWithLength, (wordWithLength) => {
         return wordWithLength.len === wordLength;
-});
-letterLengthList.push({
-    words: _.pluck(list, 'word'),
-    numberOfLetters: wordLength
-});
+    });
+    return {
+        words: _.pluck(list, 'word'),
+        numberOfLetters: wordLength
+    };
 });
 
 export function NewWID(widLength:number):string {
@@ -66,25 +72,25 @@ export function NewWID(widLength:number):string {
         _.each(lengths, (length) => {
             var list = _.find(letterLengthList, (letterLength) => {
                 return letterLength.numberOfLetters === length;
-    });
-    widWords.push(list.words[Math.floor(Math.random() * (list.words.length - 1))]);
-});
-}
-var wid = "";
-_.each(widWords, (word) => {
-    if (wid.length === 0) {
-    wid += word;
-}
-else {
-    wid += word.substring(0, 1).toUpperCase() + word.substring(1);
-}
-});
-if (wid.length < widLength) {
-    for (var i = 0; i < widLength - wid.length; i++) {
-        wid += letters[Math.floor(Math.random() * (letters.length - 1))];
+            });
+            widWords.push(list.words[Math.floor(Math.random() * (list.words.length - 1))]);
+        });
     }
-}
-return wid;
+    var wid = "";
+    _.each(widWords, (word) => {
+        if (wid.length === 0) {
+            wid += word;
+        }
+        else {
+            wid += word.substring(0, 1).toUpperCase() + word.substring(1);
+        }
+    });
+    if (wid.length < widLength) {
+        for (var i = 0; i < widLength - wid.length; i++) {
+            wid += letters[Math.floor(Math.random() * (letters.length - 1))];
+        }
+    }
+    return wid;
 }
 
 function getRandomLengthRange(length:number):number[] {
@@ -103,6 +109,7 @@ function getRandomLengthRange(length:number):number[] {
     }
     return lengths;
 }
+
 function getRandomLength(length:number):number {
     var rnd = shortestWordWithLength.len + Math.floor(
         Math.random() * (longestWordWithLength.len - shortestWordWithLength.len));
@@ -113,9 +120,5 @@ function getRandomLength(length:number):number {
 }
 
 function sumLengths(lengths:number[]):number {
-    var total = 0;
-    _.each(lengths, (len) => {
-        total += len;
-});
-return total;
+    return _.reduce(lengths, function(memo, num){ return memo + num; }, 0);
 }
