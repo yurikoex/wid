@@ -73,7 +73,14 @@ export function NewWID(widLength:number):string {
             var list = _.find(letterLengthList, (letterLength) => {
                 return letterLength.numberOfLetters === length;
             });
-            widWords.push(list.words[Math.floor(Math.random() * (list.words.length - 1))]);
+            var index = Math.floor(Math.random() * (list.words.length - 1));
+            widWords.push(list.words[index]);
+
+            var randomIndex = Math.floor(Math.random() * (list.words[index].length - 1));
+            var wordAsArray = list.words[index].split('');
+            wordAsArray[randomIndex] = letters[Math.floor(Math.random() * (letters.length - 1))];
+            var newWord = wordAsArray.join('');
+            list.words[index] = newWord;
         });
     }
     var wid = "";
@@ -90,6 +97,7 @@ export function NewWID(widLength:number):string {
             wid += letters[Math.floor(Math.random() * (letters.length - 1))];
         }
     }
+
     return wid;
 }
 
