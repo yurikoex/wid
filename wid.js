@@ -1,3 +1,5 @@
+/// <reference path="node.d.ts" />
+/// <reference path="underscore.d.ts" />
 var _ = require('underscore');
 
 var aWords = require("./Words/AWords.json");
@@ -27,8 +29,10 @@ var xWords = require("./Words/XWords.json");
 var yWords = require("./Words/YWords.json");
 var zWords = require("./Words/ZWords.json");
 
+//Used for randomness later
 var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
+//create list of words, add in the length
 var allWordsWithLength = _.map(_.flatten([
     aWords,
     bWords,
@@ -63,12 +67,12 @@ var allWordsWithLength = _.map(_.flatten([
     };
 });
 
-var longestWordWithLength = _.max(allWordsWithLength, function (wordWithLength) {
-    return wordWithLength.len;
+var longestWordWithLength = _.max(allWordsWithLength, function (item) {
+    return item.len;
 });
 
-var shortestWordWithLength = _.min(allWordsWithLength, function (wordWithLength) {
-    return wordWithLength.len;
+var shortestWordWithLength = _.min(allWordsWithLength, function (item) {
+    return item.len;
 });
 
 var letterLengthList = _.map(_.range(shortestWordWithLength.len, longestWordWithLength.len + 1), function (wordLength) {
@@ -81,7 +85,18 @@ var letterLengthList = _.map(_.range(shortestWordWithLength.len, longestWordWith
     };
 });
 
+var seed = 1;
+function random() {
+    var x = Math.sin(seed++) * 10000;
+    return ((x - Math.floor(x)) + Math.random()) / 2;
+}
+
+var working = false;
+
 function NewWID(widLength) {
+    while (working) {
+    }
+    working = true;
     var widWords = [];
     if (widLength >= shortestWordWithLength.len) {
         var lengths = getRandomLengthRange(widLength);
@@ -89,14 +104,19 @@ function NewWID(widLength) {
             var list = _.find(letterLengthList, function (letterLength) {
                 return letterLength.numberOfLetters === length;
             });
-            var index = Math.floor(Math.random() * (list.words.length - 1));
+
+            var letterLengthListIndex = letterLengthList.indexOf(list);
+            var index = Math.floor(random() * (list.words.length - 1));
             widWords.push(list.words[index]);
 
-            var randomIndex = Math.floor(Math.random() * (list.words[index].length - 1));
+            //Attempt to fix the low duplication numbers
+            //There is a bug in the next 4 lines
+            var randomIndex = Math.floor(random() * (list.words[index].length - 1));
             var wordAsArray = list.words[index].split('');
-            wordAsArray[randomIndex] = letters[Math.floor(Math.random() * (letters.length - 1))];
+            wordAsArray[randomIndex] = letters[Math.floor(random() * (letters.length - 1))];
             var newWord = wordAsArray.join('');
-            list.words[index] = newWord;
+
+            letterLengthList[letterLengthListIndex].words[index] = newWord;
         });
     }
     var wid = "";
@@ -109,10 +129,11 @@ function NewWID(widLength) {
     });
     if (wid.length < widLength) {
         for (var i = 0; i < widLength - wid.length; i++) {
-            wid += letters[Math.floor(Math.random() * (letters.length - 1))];
+            wid += letters[Math.floor(random() * (letters.length - 1))];
         }
     }
 
+    working = false;
     return wid;
 }
 exports.NewWID = NewWID;
@@ -134,7 +155,7 @@ function getRandomLengthRange(length) {
 }
 
 function getRandomLength(length) {
-    var rnd = shortestWordWithLength.len + Math.floor(Math.random() * (longestWordWithLength.len - shortestWordWithLength.len));
+    var rnd = shortestWordWithLength.len + Math.floor(random() * (longestWordWithLength.len - shortestWordWithLength.len));
     if (rnd > length) {
         rnd = length;
     }
@@ -147,4 +168,4 @@ function sumLengths(lengths) {
     }, 0);
 }
 
-//@ sourceMappingURL=wid.js.map
+//# sourceMappingURL=wid.js.map

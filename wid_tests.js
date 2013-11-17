@@ -16,13 +16,6 @@ module.exports = {
         for (var i = 0; i < 50; i++) {
             var stamp = new Date().getTime();
             var w = this.wid.NewWID(i);
-//            if (w.length !== i) {
-//                throw {
-//                    wid: w,
-//                    requestedLength: i,
-//                    actualLength: w.length
-//                };
-//            }
             console.log("WID: " + w + " (" + (new Date().getTime() - stamp) + ")");
         }
         test.done();
@@ -44,5 +37,19 @@ module.exports = {
         }
         test.done();
     }
+//    ,
+//    Randomer:function(test){
+//        var seed = 1;
+//        function random() {
+//            var x = Math.sin(seed++) * 10000;
+//            return ((x- Math.floor(x)) + Math.random())/2 ;
+//        }
+//        for(var i = 0; i<100;i++)
+//        {
+//            console.log(random());
+//        }
+//
+//        test.done();
+//    }
 };
 
