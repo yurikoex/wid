@@ -1,6 +1,6 @@
 /// <reference path="node.d.ts" />
-/// <reference path="underscore.d.ts" />
-var _ = require('underscore');
+/// <reference path="lodash.d.ts" />
+var _ = require('lodash');
 
 var aWords = require("./Words/AWords.json");
 var bWords = require("./Words/BWords.json");

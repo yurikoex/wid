@@ -1,10 +1,6 @@
-// Underscore 1.4.2
-
-// http://underscorejs.org
-// http://github.com/documentcloud/underscore
 
 // Collections
-declare module "underscore" {
+declare module "lodash" {
 	/**
 	 * Iterates over a list of elements, yielding each in turn to an iterator function.
 	 * The iterator is bound to the context object, if one is passed. Each invocation of
@@ -76,7 +72,7 @@ declare module "underscore" {
 }
 
 // Array Functions
-declare module "underscore" {
+declare module "lodash" {
 	export function first<T>(array: T[]): T;
 	export function first<T>(array: T[], n: number): T[];
 	export function head<T>(array: T[]): T;
@@ -116,7 +112,7 @@ declare module "underscore" {
 }
 
 // Function Functions
-declare module "underscore" {
+declare module "lodash" {
 	export function bind(_function : Function, object : any, ...arguments : any[]) : () => any;
 	export function bindAll(object : any, ... methodNames : any[]) : void;
 	export function memoize(_function : Function, hashFunction? : (value : any) => any) : any;
@@ -131,7 +127,7 @@ declare module "underscore" {
 }
 
 // Object Functions
-declare module "underscore" {
+declare module "lodash" {
 	export function keys(object: any) : any[];
 	export function values(object: any) : any[];
 	export function pairs(object: any) : any[];
@@ -168,7 +164,7 @@ declare module "underscore" {
 }
 
 // Utility Functions
-declare module "underscore" {
+declare module "lodash" {
 	export function noConflict() : any;
 	export function identity(value: any): any;
 	export function times(n : number, iterator : (value : any) => void, context?);
@@ -181,7 +177,7 @@ declare module "underscore" {
 }
 
 // Chaining Functions
-declare module "underscore" {
+declare module "lodash" {
 	export interface Chain {
 		// Collection
 		each(iterator: (item: any) => void, context?: any) : Chain;

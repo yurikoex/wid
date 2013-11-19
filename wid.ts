@@ -1,7 +1,7 @@
 /// <reference path="node.d.ts" />
-/// <reference path="underscore.d.ts" />
+/// <reference path="lodash.d.ts" />
 
-var _ = require('underscore');
+var _ = require('lodash');
 
 var aWords:string[] = <string[]>require("./Words/AWords.json");
 var bWords:string[] = <string[]>require("./Words/BWords.json");
@@ -31,7 +31,6 @@ var yWords:string[] = <string[]>require("./Words/YWords.json");
 var zWords:string[] = <string[]>require("./Words/ZWords.json");
 
 
-
 //Used for randomness later
 var letters:string[] = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 
@@ -39,6 +38,7 @@ interface IAllWords {
     word:string;
     len:number;
 }
+
 
 //create list of words, add in the length
 var allWordsWithLength:IAllWords[] = _.map<string[],IAllWords[]>(_.flatten([
