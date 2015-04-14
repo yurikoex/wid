@@ -32,6 +32,7 @@ var zWords = require("./Words/ZWords.json");
 //Used for randomness later
 var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
+
 //create list of words, add in the length
 var allWordsWithLength = _.map(_.flatten([
     aWords,
